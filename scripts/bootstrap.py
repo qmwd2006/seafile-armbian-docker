@@ -161,7 +161,7 @@ COMPRESS_CACHE_BACKEND = 'locmem'""")
         fp.write('\n')
         fp.write("TIME_ZONE = '{time_zone}'".format(time_zone=os.getenv('TIME_ZONE',default='Etc/UTC')))
         fp.write('\n')
-        fp.write('FILE_SERVER_ROOT = "{proto}://{domain}/seafhttp"'.format(proto=proto, domain=domain))
+        fp.write('FILE_SERVER_ROOT = "{proto}://{domain}:8082"'.format(proto=proto, domain=domain))
         fp.write('\n')
 
     # By default ccnet-server binds to the unix socket file
