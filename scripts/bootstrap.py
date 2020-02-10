@@ -141,6 +141,12 @@ def init_seafile_server():
     call('''sed -i -e '/def validate_mysql_host(self, host)/a \ \ \ \ \ \ \ \ return host' {}'''
         .format(get_script('setup-seafile-mysql.py')))
 
+    call('''sed -i -e 's/# default localhost:8000/# default 0.0.0.0:8000/' {}'''
+        .format(get_script('setup-seafile-mysql.py')))
+
+    call('''sed -i -e 's/bind = "127.0.0.1:8000"/bind = "0.0.0.0:8000"/' {}'''
+        .format(get_script('setup-seafile-mysql.py')))
+
     setup_script = get_script('setup-seafile-mysql.sh')
     call('{} auto -n seafile'.format(setup_script), env=env)
 

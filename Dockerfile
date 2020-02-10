@@ -2,28 +2,31 @@ FROM debian:buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update -qq
-RUN apt-get install -qq -y vim htop net-tools psmisc git wget curl tzdata
+RUN apt-get update
+RUN apt-get install --no-install-recommends -y htop net-tools psmisc procps tzdata
+RUN apt-get install --no-install-recommends -y vim git wget curl
+RUN apt-get install --no-install-recommends -y python2.7-dev python-ldap python-mysqldb
+RUN apt-get install --no-install-recommends -y zlib1g-dev libjpeg-dev libmemcached-dev
+RUN apt-get install --no-install-recommends -y gcc
+RUN apt-get install --no-install-recommends -y ca-certificates
 
-RUN apt-get install -y python2.7-dev python-ldap python-mysqldb zlib1g-dev libmemcached-dev gcc
-RUN curl -sSL -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py && \
-    python /tmp/get-pip.py && \
-    rm -rf /tmp/get-pip.py && \
-    pip install -U wheel
+RUN curl -sSL -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py \
+ && python /tmp/get-pip.py \
+ && rm -rf /tmp/get-pip.py \
+ && pip install -U wheel
 
-ADD requirements.txt  /tmp/requirements.txt
+ADD requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
 COPY scripts /scripts
 
 WORKDIR /opt/seafile
 
-RUN mkdir -p /opt/seafile/
-COPY seafile-server_7.0.5_aarch64.tar.gz /opt/seafile
-RUN tar xzf /opt/seafile/seafile-server_7.0.5_aarch64.tar.gz -C /opt/seafile
+RUN mkdir -p /opt/seafile/ && mkdir /shared/
+
+ADD seafile-server_7.0.5_aarch64.tar.gz /opt/seafile/
 
 RUN rm -rf \
-    /opt/seafile/seafile-server_7.0.5_aarch64.tar.gz
     /root/.cache \
     /root/.npm \
     /root/.pip \
