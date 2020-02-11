@@ -55,6 +55,7 @@ def main():
     wait_for_mysql()
     init_seafile_server()
 
+    call('/scripts/create_data_links.sh')
     check_upgrade()
     os.chdir(installdir)
 
