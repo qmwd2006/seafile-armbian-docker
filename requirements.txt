@@ -6,7 +6,7 @@
 #
 click==6.6
 colorlog==2.7.0
-Jinja2==2.8
+Jinja2==2.11.3
 MarkupSafe==0.23          # via jinja2
 prettytable==0.7.2
 termcolor==1.1.0
